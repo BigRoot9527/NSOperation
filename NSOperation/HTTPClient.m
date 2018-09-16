@@ -9,15 +9,11 @@
 
 #import "HTTPClient.h"
 #import "NSData+DataConvert.h"
+#import "HTTPRequestProvider.h"
 
-
-typedef NS_ENUM(NSInteger, KKRequestType) {
-    KKRequestTypeGet = 0,
-    KKRequestTypePost = 1,
-    KKRequestTypeImage = 2,
-};
 @interface HTTPClient()
-@property(nonatomic,strong) NSURLSession *session;
+@property(nonatomic, strong) NSURLSession *session;
+@property(nonatomic, strong) HTTPRequestProvider *requestProvider;
 @end
 
 @implementation HTTPClient
@@ -27,58 +23,56 @@ typedef NS_ENUM(NSInteger, KKRequestType) {
     static HTTPClient *instance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        instance = [[HTTPClient alloc] init];
-        instance.session = [NSURLSession sharedSession];
+        instance = [[HTTPClient alloc] _init];
+        
     });
     return instance;
 }
 
-- (NSURL *)_urlForRequestType: (KKRequestType)type
+- (instancetype)init
 {
-    NSString *urlString;
-    switch (type) {
-        case KKRequestTypeGet:
-            urlString = @"https://httpbin.org/get";
-            break;
-        case KKRequestTypePost:
-            urlString = @"https://httpbin.org/post";
-            break;
-        case KKRequestTypeImage:
-            urlString = @"https://httpbin.org/image/png";
+    return [[self class] sharedInstance];
+}
+
+- (instancetype)_init
+{
+    self = [super init];
+    if (self) {
+        self.session = [NSURLSession sharedSession];
+        self.requestProvider = [[HTTPRequestProvider alloc] init];
     }
-    return [[NSURL alloc] initWithString:urlString];
+    return self;
 }
 
 - (void)fetchGetResponseWithCallback:(void(^)(NSDictionary *, NSError *))callback
 {
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[self _urlForRequestType:KKRequestTypeGet]];
-    [request setHTTPMethod:@"GET"];
+    NSMutableURLRequest *request = [self.requestProvider requestOfKKReqiestType:KKRequestTypeGet urlenStringForPost:nil];
     NSURLSessionDataTask *dataTask = [self.session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        callback([data dictionaryFromData], error);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            callback([data dictionaryFromData], error);
+        });
     }];
     [dataTask resume];
 }
 - (void)postCustomerName:(NSString *)name callback:(void(^)(NSDictionary *, NSError *))callback
 {
-    NSString *post = [NSString stringWithFormat:@"name=%@",name];
-    NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[self _urlForRequestType:KKRequestTypePost]];
-    NSString *postLength = [NSString stringWithFormat:@"%lu", [postData length]];
-    [request setHTTPMethod:@"POST"];
-    [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
-    [request setHTTPBody:postData];
+    NSString *postString = [NSString stringWithFormat:@"custname=%@",name];
+    NSMutableURLRequest *request = [self.requestProvider requestOfKKReqiestType:KKRequestTypePost urlenStringForPost:postString];
     NSURLSessionDataTask *dataTask = [self.session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        callback([data dictionaryFromData], error);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            callback([data dictionaryFromData], error);
+        });
     }];
     [dataTask resume];
 }
 
 - (void)fetchImageWithCallback:(void(^)(UIImage *, NSError *))callback
 {
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[self _urlForRequestType:KKRequestTypeImage]];
-    [request setHTTPMethod:@"GET"];
+    NSMutableURLRequest *request = [self.requestProvider requestOfKKReqiestType:KKRequestTypeImage urlenStringForPost:nil];
     NSURLSessionDataTask *dataTask = [self.session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        callback([data imageFromData], error);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            callback([data imageFromData], error);
+        });
     }];
     [dataTask resume];
 }

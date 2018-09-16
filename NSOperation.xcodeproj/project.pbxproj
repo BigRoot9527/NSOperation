@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		32F89DAD214E9F2B0069F298 /* HTTPRequestProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 32F89DAC214E9F2B0069F298 /* HTTPRequestProvider.m */; };
 		E68BE402214BB2F900AE6891 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E68BE401214BB2F900AE6891 /* AppDelegate.m */; };
 		E68BE405214BB2F900AE6891 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E68BE404214BB2F900AE6891 /* ViewController.m */; };
 		E68BE408214BB2F900AE6891 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E68BE406214BB2F900AE6891 /* Main.storyboard */; };
@@ -29,6 +30,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		32F89DAB214E9F2B0069F298 /* HTTPRequestProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HTTPRequestProvider.h; sourceTree = "<group>"; };
+		32F89DAC214E9F2B0069F298 /* HTTPRequestProvider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HTTPRequestProvider.m; sourceTree = "<group>"; };
 		E68BE3FD214BB2F900AE6891 /* NSOperation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NSOperation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E68BE400214BB2F900AE6891 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E68BE401214BB2F900AE6891 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -87,6 +90,8 @@
 		E68BE3FF214BB2F900AE6891 /* NSOperation */ = {
 			isa = PBXGroup;
 			children = (
+				32F89DAB214E9F2B0069F298 /* HTTPRequestProvider.h */,
+				32F89DAC214E9F2B0069F298 /* HTTPRequestProvider.m */,
 				E68BE424214BB32800AE6891 /* HTTPClient.h */,
 				E68BE425214BB32800AE6891 /* HTTPClient.m */,
 				E68BE429214BBC8B00AE6891 /* NSData+DataConvert.h */,
@@ -215,6 +220,7 @@
 			files = (
 				E68BE42B214BBC8B00AE6891 /* NSData+DataConvert.m in Sources */,
 				E68BE405214BB2F900AE6891 /* ViewController.m in Sources */,
+				32F89DAD214E9F2B0069F298 /* HTTPRequestProvider.m in Sources */,
 				E68BE410214BB2FA00AE6891 /* main.m in Sources */,
 				E68BE402214BB2F900AE6891 /* AppDelegate.m in Sources */,
 				E68BE426214BB32800AE6891 /* HTTPClient.m in Sources */,
