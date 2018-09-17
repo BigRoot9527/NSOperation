@@ -42,7 +42,7 @@
 
 - (void)main
 {
-    [self _loadGetRequestFromClient];
+    [self _loadGetRequest];
 }
 
 - (void)cancel
@@ -52,7 +52,7 @@
     dispatch_semaphore_signal(self.sem);
 }
 
-- (void)_loadGetRequestFromClient
+- (void)_loadGetRequest
 {
     if (self.isCancelled) {
         return;
@@ -72,10 +72,10 @@
         }
     }];
     dispatch_semaphore_wait(self.sem, DISPATCH_TIME_FOREVER);
-    [self _loadPostRequestFromClient];
+    [self _loadPostRequest];
 }
 
-- (void)_loadPostRequestFromClient
+- (void)_loadPostRequest
 {
     if (self.isCancelled) {
         return;
@@ -95,10 +95,10 @@
         }
     }];
     dispatch_semaphore_wait(self.sem, DISPATCH_TIME_FOREVER);
-    [self _loadImageRequestFromClient];
+    [self _loadImageRequest];
 }
 
-- (void)_loadImageRequestFromClient
+- (void)_loadImageRequest
 {
     if (self.isCancelled) {
         return;
@@ -118,10 +118,10 @@
         }
     }];
     dispatch_semaphore_wait(self.sem, DISPATCH_TIME_FOREVER);
-    [self _finishAndPassAllResponse];
+    [self _passAllResponse];
 }
 
-- (void)_finishAndPassAllResponse
+- (void)_passAllResponse
 {
     if(self.isCancelled) {
         return;
