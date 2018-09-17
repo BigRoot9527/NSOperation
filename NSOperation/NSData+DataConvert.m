@@ -27,7 +27,7 @@
     UIImage *image = [UIImage imageWithData:self];
     if (!image) {
         NSMutableDictionary* details = [NSMutableDictionary dictionary];
-        [details setValue:@"fail to transfer to UIImage" forKey:NSLocalizedDescriptionKey];
+        [details setValue:@"fail to transfer to UIImage" forKey:NSDebugDescriptionErrorKey];
         *handler = [[NSError alloc] initWithDomain:@"com.NSOperation.BigRoot" code:-1 userInfo:details];
         return nil;
     }
