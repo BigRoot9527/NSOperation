@@ -95,7 +95,7 @@
         }
     }];
     dispatch_semaphore_wait(self.sem, DISPATCH_TIME_FOREVER);
-    [self _loadPostRequestFromClient];
+    [self _loadImageRequestFromClient];
 }
 
 - (void)_loadImageRequestFromClient
@@ -107,6 +107,7 @@
         if (image) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.delegate operation:self didUpdateLoadingProcessPrecentageTo:100];
+                self.image = image;
             });
             dispatch_semaphore_signal(self.sem);
         } else {
@@ -122,6 +123,9 @@
 
 - (void)_finishAndPassAllResponse
 {
+    if(self.isCancelled) {
+        return;
+    }
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.delegate operation:self didFinishAllRequestWithGETResponseDict:self.getDict AndPostResponseDict:self.postDict AndResponseImage:self.image];
     });

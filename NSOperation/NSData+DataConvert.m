@@ -10,24 +10,26 @@
 
 @implementation NSData (DataConvert)
 
-- (NSDictionary *)dictionaryFromData
+- (NSDictionary*)dictionaryFromDataWithErrorHandler:(NSError**)handler;
 {
     NSError *err;
     NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:self options:NSJSONReadingMutableContainers error:&err];
-    
     if(err)
     {
-        NSLog(@"json parse fail：%@",err);
+        *handler = err;
         return nil;
     }
     return dict;
 }
 
-- (UIImage *)imageFromData
+- (UIImage*)imageFromDataWithErrorHandler:(NSError**)handler;
 {
     UIImage *image = [UIImage imageWithData:self];
     if (!image) {
-        NSLog(@"fail to transfer to UIImage");
+        NSMutableDictionary* details = [NSMutableDictionary dictionary];
+        [details setValue:@"fail to transfer to UIImage" forKey:NSLocalizedDescriptionKey];
+        *handler = [[NSError alloc] initWithDomain:@"com.NSOperation.BigRoot" code:-1 userInfo:details];
+        return nil;
     }
     return image;
 }

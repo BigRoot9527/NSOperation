@@ -11,10 +11,6 @@
 
 @interface HTTPBinManager()
 @property (nonatomic, strong) NSOperationQueue* operationQueue;
-@property(nonatomic,strong) NSDictionary *getDictionary;
-@property(nonatomic,strong) NSDictionary *postDictionary;
-@property(nonatomic,strong) UIImage *getImage;
-@property(nonatomic,strong) NSString *errorMassage;
 @end
 
 @interface HTTPBinManager(HTTPBinManagerOperationDelegate)<HTTPBinManagerOperationDelegate>
@@ -50,47 +46,35 @@
 - (void)executeOperation
 {
     [self.operationQueue cancelAllOperations];
-    [self _resetDataProperties];
     HTTPBinManagerOperation *operation = [[HTTPBinManagerOperation alloc] initWithDelegate:self];
     [self.operationQueue addOperation:operation];
+    [self.delegate managerDidStartOperation:self];
 }
 
 - (void)cancelOperation
 {
     [self.operationQueue cancelAllOperations];
-    [self _resetDataProperties];
-}
-
-- (void)_resetDataProperties
-{
-    self.getDictionary = nil;
-    self.postDictionary = nil;
-    self.getImage = nil;
-    self.errorMassage = nil;
+    NSMutableDictionary* details = [NSMutableDictionary dictionary];
+    [details setValue:@"User Cancelled" forKey:NSLocalizedDescriptionKey];
+    [self.delegate manager:self didEndCurrentOperationWithError:[[NSError alloc] initWithDomain:@"com.NSOperation.BigRoot" code:-999 userInfo:details]];
 }
 
 @end
 
 @implementation HTTPBinManager(HTTPBinManagerOperationDelegate)
-- (void)operation:(HTTPBinManagerOperation *)op didFailLoadingWithError:(NSError *)error {
-    self.errorMassage = [error description];
-    [self.delegate managerDidFinishedCurrentOperation:self];
+- (void)operation:(HTTPBinManagerOperation *)op didFailLoadingWithError:(NSError *)error
+{
+    [self.delegate manager:self didEndCurrentOperationWithError:error];
 }
 
-- (void)operation:(HTTPBinManagerOperation *)op didFinishAllRequestWithGETResponseDict:(NSDictionary *)getDict AndPostResponseDict:(NSDictionary *)postDict AndResponseImage:(UIImage *)image {
-    if (getDict && postDict && image) {
-        self.postDictionary = postDict;
-        self.getDictionary = getDict;
-        self.getImage = image;
-        self.errorMassage = nil;
-    } else {
-        self.errorMassage = @"response data parsing error";
-    }
-    [self.delegate managerDidFinishedCurrentOperation:self];
+- (void)operation:(HTTPBinManagerOperation *)op didFinishAllRequestWithGETResponseDict:(NSDictionary *)getDict AndPostResponseDict:(NSDictionary *)postDict AndResponseImage:(UIImage *)image
+{
+    [self.delegate manager:self didFinishCurrentOperationWithGetDict:getDict andPostDict:postDict andImage:image];
 }
 
-- (void)operation:(HTTPBinManagerOperation *)op didUpdateLoadingProcessPrecentageTo:(NSInteger)percentage {
-    [self.delegate manager:self DidUpdateCurrentLoadingProgressPercentage:percentage];
+- (void)operation:(HTTPBinManagerOperation *)op didUpdateLoadingProcessPrecentageTo:(NSInteger)percentage
+{
+    [self.delegate manager:self didUpdateCurrentLoadingProgressPercentage:percentage];
 }
 
 @end

@@ -12,15 +12,12 @@
 @class HTTPBinManager;
 @protocol HTTPBinManagerDelegate
 - (void)managerDidStartOperation:(HTTPBinManager *)manager;
-- (void)managerDidFinishedCurrentOperation:(HTTPBinManager *)manager;
-- (void)manager:(HTTPBinManager*)manager DidUpdateCurrentLoadingProgressPercentage:(NSInteger)percentage;
+- (void)manager:(HTTPBinManager*)manager didFinishCurrentOperationWithGetDict:(NSDictionary*)getDict andPostDict:(NSDictionary*)postDict andImage:(UIImage*)image;
+- (void)manager:(HTTPBinManager*)manager didEndCurrentOperationWithError:(NSError*)error;
+- (void)manager:(HTTPBinManager*)manager didUpdateCurrentLoadingProgressPercentage:(NSInteger)percentage;
 @end
 
 @interface HTTPBinManager : NSObject
-@property(nonatomic,strong,readonly) NSDictionary *getDictionary;
-@property(nonatomic,strong,readonly) NSDictionary *postDictionary;
-@property(nonatomic,strong,readonly) UIImage *getImage;
-@property(nonatomic,strong,readonly) NSString *errorMassage;
 @property(nonatomic,weak) id<HTTPBinManagerDelegate> delegate;
 + (instancetype)sharedInstance;
 - (void)executeOperation;

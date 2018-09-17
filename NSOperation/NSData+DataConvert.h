@@ -11,7 +11,7 @@
 
 @interface NSData (DataConvert)
 
-- (NSDictionary *)dictionaryFromData;
-- (UIImage *)imageFromData;
+- (NSDictionary*)dictionaryFromDataWithErrorHandler:(NSError**)handler;
+- (UIImage*)imageFromDataWithErrorHandler:(NSError**)handler;
 
 @end

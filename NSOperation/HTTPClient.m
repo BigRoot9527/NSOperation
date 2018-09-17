@@ -54,7 +54,9 @@
     NSMutableURLRequest *request = [self.requestProvider requestOfKKReqiestType:KKRequestTypeGet urlenStringForPost:nil];
     NSURLSessionDataTask *dataTask = [self.session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            callback([data dictionaryFromData], error);
+            NSError *err;
+            NSDictionary *dict = [data dictionaryFromDataWithErrorHandler:&err];
+            callback(dict, error == nil ? err : error);
         });
     }];
     [dataTask resume];
@@ -65,7 +67,9 @@
     NSMutableURLRequest *request = [self.requestProvider requestOfKKReqiestType:KKRequestTypePost urlenStringForPost:postString];
     NSURLSessionDataTask *dataTask = [self.session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            callback([data dictionaryFromData], error);
+            NSError *err;
+            NSDictionary *dict = [data dictionaryFromDataWithErrorHandler:&err];
+            callback(dict, error == nil ? err : error);
         });
     }];
     [dataTask resume];
@@ -76,7 +80,9 @@
     NSMutableURLRequest *request = [self.requestProvider requestOfKKReqiestType:KKRequestTypeImage urlenStringForPost:nil];
     NSURLSessionDataTask *dataTask = [self.session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            callback([data imageFromData], error);
+            NSError *err;
+            UIImage *image = [data imageFromDataWithErrorHandler:&err];
+            callback(image, error == nil ? err : error);
         });
     }];
     [dataTask resume];
