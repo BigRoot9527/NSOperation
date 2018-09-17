@@ -10,7 +10,7 @@
 
 @implementation HTTPRequestProvider
 
-- (NSMutableURLRequest*)requestOfKKReqiestType:(KKRequestType)type urlenStringForPost:(NSString *)postString
+- (NSMutableURLRequest*)requestWithType:(KKRequestType)type urlenStringForPostRequest:(NSString *)postString
 {
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[self _urlForRequestType:type]];
     [request setHTTPMethod:[self _httpMethodStringForRequestType:type]];

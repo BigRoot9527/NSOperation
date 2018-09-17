@@ -12,7 +12,7 @@
 @class HTTPBinManagerOperation;
 @protocol HTTPBinManagerOperationDelegate
 - (void)operation:(HTTPBinManagerOperation *)op didFailLoadingWithError:(NSError*)error;
-- (void)operation:(HTTPBinManagerOperation *)op didUpdateLoadingProcessPrecentageTo:(NSInteger)percentage;
+- (void)operation:(HTTPBinManagerOperation *)op didUpdateLoadingProcessPercentageTo:(NSInteger)percentage;
 - (void)operation:(HTTPBinManagerOperation *)op didFinishAllRequestWithGETResponseDict:(NSDictionary*)getDict AndPostResponseDict:(NSDictionary*)postDict AndResponseImage:(UIImage*)image;
 @end
 

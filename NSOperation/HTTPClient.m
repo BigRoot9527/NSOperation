@@ -53,7 +53,7 @@
 
 - (void)fetchGetResponseWithCallback:(void(^)(NSDictionary *, NSError *))callback
 {
-    NSMutableURLRequest *request = [self.requestProvider requestOfKKReqiestType:KKRequestTypeGet urlenStringForPost:nil];
+    NSMutableURLRequest *request = [self.requestProvider requestWithType:KKRequestTypeGet urlenStringForPostRequest:nil];
     NSURLSessionDataTask *dataTask = [self.session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         dispatch_async(dispatch_get_main_queue(), ^{
             NSError *err;
@@ -67,7 +67,7 @@
 - (void)postCustomerName:(NSString *)name callback:(void(^)(NSDictionary *, NSError *))callback
 {
     NSString *postString = [NSString stringWithFormat:@"custname=%@",name];
-    NSMutableURLRequest *request = [self.requestProvider requestOfKKReqiestType:KKRequestTypePost urlenStringForPost:postString];
+    NSMutableURLRequest *request = [self.requestProvider requestWithType:KKRequestTypePost urlenStringForPostRequest:postString];
     NSURLSessionDataTask *dataTask = [self.session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         dispatch_async(dispatch_get_main_queue(), ^{
             NSError *err;
@@ -81,7 +81,7 @@
 
 - (void)fetchImageWithCallback:(void(^)(UIImage *, NSError *))callback
 {
-    NSMutableURLRequest *request = [self.requestProvider requestOfKKReqiestType:KKRequestTypeImage urlenStringForPost:nil];
+    NSMutableURLRequest *request = [self.requestProvider requestWithType:KKRequestTypeImage urlenStringForPostRequest:nil];
     NSURLSessionDataTask *dataTask = [self.session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         dispatch_async(dispatch_get_main_queue(), ^{
             NSError *err;

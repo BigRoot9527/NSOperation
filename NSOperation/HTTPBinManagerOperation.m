@@ -60,7 +60,7 @@
     [self.client fetchGetResponseWithCallback:^(NSDictionary *dict, NSError *error) {
         if (dict) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self.delegate operation:self didUpdateLoadingProcessPrecentageTo:33];
+                [self.delegate operation:self didUpdateLoadingProcessPercentageTo:33];
                 self.getDict = dict;
             });
             dispatch_semaphore_signal(self.sem);
@@ -83,7 +83,7 @@
     [self.client postCustomerName:@"BigRoot" callback:^(NSDictionary *dict, NSError *error) {
         if (dict) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self.delegate operation:self didUpdateLoadingProcessPrecentageTo:66];
+                [self.delegate operation:self didUpdateLoadingProcessPercentageTo:66];
                 self.postDict = dict;
             });
             dispatch_semaphore_signal(self.sem);
@@ -106,7 +106,7 @@
     [self.client fetchImageWithCallback:^(UIImage *image, NSError *error) {
         if (image) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self.delegate operation:self didUpdateLoadingProcessPrecentageTo:100];
+                [self.delegate operation:self didUpdateLoadingProcessPercentageTo:100];
                 self.image = image;
             });
             dispatch_semaphore_signal(self.sem);

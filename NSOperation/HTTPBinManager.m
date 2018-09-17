@@ -69,7 +69,7 @@
     [self.delegate manager:self didFinishCurrentOperationWithGetDict:getDict andPostDict:postDict andImage:image];
 }
 
-- (void)operation:(HTTPBinManagerOperation *)op didUpdateLoadingProcessPrecentageTo:(NSInteger)percentage
+- (void)operation:(HTTPBinManagerOperation *)op didUpdateLoadingProcessPercentageTo:(NSInteger)percentage
 {
     [self.delegate manager:self didUpdateCurrentLoadingProgressPercentage:percentage];
 }
