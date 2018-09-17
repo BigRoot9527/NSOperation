@@ -8,15 +8,14 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "KKRequestType.h"
 
 @class HTTPBinManagerOperation;
 @protocol HTTPBinManagerOperationDelegate
-- (void)operation:(HTTPBinManagerOperation *)op didFailLoadingWithError:(NSError*)error FromRequestType:(KKRequestType)type;
+- (void)operation:(HTTPBinManagerOperation *)op didFailLoadingWithError:(NSError*)error;
 - (void)operation:(HTTPBinManagerOperation *)op didUpdateLoadingProcessPrecentageTo:(NSInteger)percentage;
-- (void)operation:(HTTPBinManagerOperation *)op didFinishAllRequestWithGETResponseDict:(NSDictionary*)dict AndPostResponseDict:(NSDictionary*)dict AndResponseImage:(UIImage*)image;
+- (void)operation:(HTTPBinManagerOperation *)op didFinishAllRequestWithGETResponseDict:(NSDictionary*)getDict AndPostResponseDict:(NSDictionary*)postDict AndResponseImage:(UIImage*)image;
 @end
 
 @interface HTTPBinManagerOperation : NSOperation
-@property(nonatomic, weak) id<HTTPBinManagerOperationDelegate> delegate;
+- (instancetype)initWithDelegate:(id <HTTPBinManagerOperationDelegate>)delegate;
 @end

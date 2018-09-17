@@ -14,16 +14,18 @@
 @property (nonatomic, strong) NSDictionary* postDict;
 @property (nonatomic, strong) NSDictionary* getDict;
 @property (nonatomic, strong) UIImage* image;
+@property(nonatomic, weak) id<HTTPBinManagerOperationDelegate> delegate;
 @end
 
 @implementation HTTPBinManagerOperation
 
-- (instancetype)init
+- (instancetype)initWithDelegate:(id <HTTPBinManagerOperationDelegate>)delegate
 {
     self = [super init];
     if (self) {
         self.client = [HTTPClient sharedInstance];
         self.sem = dispatch_semaphore_create(0);
+        self.delegate = delegate;
     }
     return self;
 }
@@ -64,7 +66,7 @@
             dispatch_semaphore_signal(self.sem);
         } else {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self.delegate operation:self didFailLoadingWithError:error FromRequestType:KKRequestTypeGet];
+                [self.delegate operation:self didFailLoadingWithError:error];
             });
             [self cancel];
         }
@@ -87,7 +89,7 @@
             dispatch_semaphore_signal(self.sem);
         } else {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self.delegate operation:self didFailLoadingWithError:error FromRequestType:KKRequestTypePost];
+                [self.delegate operation:self didFailLoadingWithError:error];
             });
             [self cancel];
         }
@@ -109,7 +111,7 @@
             dispatch_semaphore_signal(self.sem);
         } else {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self.delegate operation:self didFailLoadingWithError:error FromRequestType:KKRequestTypePost];
+                [self.delegate operation:self didFailLoadingWithError:error];
             });
             [self cancel];
         }
