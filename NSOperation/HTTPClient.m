@@ -14,6 +14,7 @@
 @interface HTTPClient()
 @property(nonatomic, strong) NSURLSession *session;
 @property(nonatomic, strong) HTTPRequestProvider *requestProvider;
+@property(nonatomic, strong) NSURLSessionDataTask *currentDataTask;
 @end
 
 @implementation HTTPClient
@@ -46,7 +47,8 @@
 
 - (void)cancelRequest
 {
-    [self.session invalidateAndCancel];
+    [self.currentDataTask suspend];
+    [self.currentDataTask cancel];
 }
 
 - (void)fetchGetResponseWithCallback:(void(^)(NSDictionary *, NSError *))callback
@@ -60,6 +62,7 @@
         });
     }];
     [dataTask resume];
+    self.currentDataTask = dataTask;
 }
 - (void)postCustomerName:(NSString *)name callback:(void(^)(NSDictionary *, NSError *))callback
 {
@@ -73,6 +76,7 @@
         });
     }];
     [dataTask resume];
+    self.currentDataTask = dataTask;
 }
 
 - (void)fetchImageWithCallback:(void(^)(UIImage *, NSError *))callback
@@ -86,6 +90,7 @@
         });
     }];
     [dataTask resume];
+    self.currentDataTask = dataTask;
 }
 
 @end

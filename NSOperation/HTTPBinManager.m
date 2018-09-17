@@ -54,9 +54,6 @@
 - (void)cancelOperation
 {
     [self.operationQueue cancelAllOperations];
-    NSMutableDictionary* details = [NSMutableDictionary dictionary];
-    [details setValue:@"User Cancelled" forKey:NSDebugDescriptionErrorKey];
-    [self.delegate manager:self didEndCurrentOperationWithError:[[NSError alloc] initWithDomain:@"com.NSOperation.BigRoot" code:-999 userInfo:details]];
 }
 
 @end
