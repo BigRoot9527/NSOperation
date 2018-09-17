@@ -55,7 +55,7 @@
         XCTAssertNil(error);
         NSDictionary *formDict = [dict valueForKey:@"form"];
         XCTAssertNotNil(formDict);
-        XCTAssertEqual([formDict valueForKey:@"custname"], stubCustName);
+        XCTAssertTrue([[formDict valueForKey:@"custname"] isEqualToString:stubCustName]);
         [expectation fulfill];
     }];
     
