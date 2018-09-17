@@ -44,6 +44,11 @@
     return self;
 }
 
+- (void)cancelRequest
+{
+    [self.session invalidateAndCancel];
+}
+
 - (void)fetchGetResponseWithCallback:(void(^)(NSDictionary *, NSError *))callback
 {
     NSMutableURLRequest *request = [self.requestProvider requestOfKKReqiestType:KKRequestTypeGet urlenStringForPost:nil];

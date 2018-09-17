@@ -7,12 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "KKRequestType.h"
 
-typedef NS_ENUM(NSInteger, KKRequestType) {
-    KKRequestTypeGet = 0,
-    KKRequestTypePost = 1,
-    KKRequestTypeImage = 2,
-};
 
 @interface HTTPRequestProvider : NSObject
 
