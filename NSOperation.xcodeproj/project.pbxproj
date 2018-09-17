@@ -14,11 +14,11 @@
 		E68BE40A214BB2FA00AE6891 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E68BE409214BB2FA00AE6891 /* Assets.xcassets */; };
 		E68BE40D214BB2FA00AE6891 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E68BE40B214BB2FA00AE6891 /* LaunchScreen.storyboard */; };
 		E68BE410214BB2FA00AE6891 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E68BE40F214BB2FA00AE6891 /* main.m */; };
-		E68BE41A214BB2FA00AE6891 /* NSOperationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E68BE419214BB2FA00AE6891 /* NSOperationTests.m */; };
 		E68BE426214BB32800AE6891 /* HTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = E68BE425214BB32800AE6891 /* HTTPClient.m */; };
 		E68BE42B214BBC8B00AE6891 /* NSData+DataConvert.m in Sources */ = {isa = PBXBuildFile; fileRef = E68BE42A214BBC8B00AE6891 /* NSData+DataConvert.m */; };
 		E68BE42E214F441900AE6891 /* HTTPBinManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E68BE42D214F441900AE6891 /* HTTPBinManager.m */; };
 		E68BE431214F48AC00AE6891 /* HTTPBinManagerOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E68BE430214F48AC00AE6891 /* HTTPBinManagerOperation.m */; };
+		E68BE436214FAE4F00AE6891 /* TestHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = E68BE435214FAE4F00AE6891 /* TestHTTPClient.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,7 +45,6 @@
 		E68BE40E214BB2FA00AE6891 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E68BE40F214BB2FA00AE6891 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		E68BE415214BB2FA00AE6891 /* NSOperationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NSOperationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		E68BE419214BB2FA00AE6891 /* NSOperationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NSOperationTests.m; sourceTree = "<group>"; };
 		E68BE41B214BB2FA00AE6891 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E68BE424214BB32800AE6891 /* HTTPClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HTTPClient.h; sourceTree = "<group>"; };
 		E68BE425214BB32800AE6891 /* HTTPClient.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HTTPClient.m; sourceTree = "<group>"; };
@@ -56,6 +55,7 @@
 		E68BE42F214F48AC00AE6891 /* HTTPBinManagerOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HTTPBinManagerOperation.h; sourceTree = "<group>"; };
 		E68BE430214F48AC00AE6891 /* HTTPBinManagerOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HTTPBinManagerOperation.m; sourceTree = "<group>"; };
 		E68BE434214F52BB00AE6891 /* KKRequestType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KKRequestType.h; sourceTree = "<group>"; };
+		E68BE435214FAE4F00AE6891 /* TestHTTPClient.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestHTTPClient.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,7 +124,7 @@
 		E68BE418214BB2FA00AE6891 /* NSOperationTests */ = {
 			isa = PBXGroup;
 			children = (
-				E68BE419214BB2FA00AE6891 /* NSOperationTests.m */,
+				E68BE435214FAE4F00AE6891 /* TestHTTPClient.m */,
 				E68BE41B214BB2FA00AE6891 /* Info.plist */,
 			);
 			path = NSOperationTests;
@@ -245,7 +245,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E68BE41A214BB2FA00AE6891 /* NSOperationTests.m in Sources */,
+				E68BE436214FAE4F00AE6891 /* TestHTTPClient.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
