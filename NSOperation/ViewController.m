@@ -96,7 +96,7 @@
     [self.loadAllButton setEnabled:YES];
     [self.cancelButton setEnabled:NO];
     self.responseInfoLabel.text = [error debugDescription];
-    self.httpProgressLabel.text = @"Stop";
+    self.httpProgressLabel.text = @"Stop"; 
 }
 
 
