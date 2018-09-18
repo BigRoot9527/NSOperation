@@ -18,7 +18,7 @@
 - (void)setUp
 {
     [super setUp];
-    self.client = [HTTPClient sharedInstance];
+    self.client = [[HTTPClient alloc] init];
 }
 
 - (void)tearDown
@@ -34,16 +34,14 @@
     [self.client fetchGetResponseWithCallback:^(NSDictionary *dict, NSError *error) {
         XCTAssertNotNil(dict);
         XCTAssertNil(error);
-        XCTAssertTrue([[dict valueForKey:@"url"] isEqualToString:@"https://httpbin.org/get"]);
+        //literal
+        XCTAssertTrue([dict[@"url"] isEqualToString:@"https://httpbin.org/get"]);
         
         [expectation fulfill];
     }];
     [self waitForExpectationsWithTimeout:30.0 handler:^(NSError *error) {
-        if (error) {
-            NSLog(@"Timeout Error: %@", error);
-        }
+        XCTFail(@"Request TimeOut");
     }];
-
 }
 
 - (void)testServerPostEndpoint
@@ -53,16 +51,14 @@
     [self.client postCustomerName:stubCustName callback:^(NSDictionary *dict, NSError *error) {
         XCTAssertNotNil(dict);
         XCTAssertNil(error);
-        NSDictionary *formDict = [dict valueForKey:@"form"];
+        NSDictionary *formDict = dict[@"form"];
         XCTAssertNotNil(formDict);
-        XCTAssertTrue([[formDict valueForKey:@"custname"] isEqualToString:stubCustName]);
+        XCTAssertTrue([formDict[@"custname"] isEqualToString:stubCustName]);
         [expectation fulfill];
     }];
     
     [self waitForExpectationsWithTimeout:30.0 handler:^(NSError *error) {
-        if (error) {
-            NSLog(@"Timeout Error: %@", error);
-        }
+        XCTFail(@"Request TimeOut");
     }];
 }
 
@@ -76,9 +72,7 @@
         [expectation fulfill];
     }];
     [self waitForExpectationsWithTimeout:30.0 handler:^(NSError *error) {
-        if (error) {
-            NSLog(@"Timeout Error: %@", error);
-        }
+        XCTFail(@"Request TimeOut");
     }];
 }
 

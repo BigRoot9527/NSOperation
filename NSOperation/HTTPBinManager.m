@@ -69,9 +69,14 @@
     [self.delegate manager:self didFinishCurrentOperationWithGetDict:getDict andPostDict:postDict andImage:image];
 }
 
-- (void)operation:(HTTPBinManagerOperation *)op didUpdateLoadingProcessPercentageTo:(NSInteger)percentage
+- (void)operation:(HTTPBinManagerOperation *)op didLoadToPercentage:(NSInteger)percentage
 {
     [self.delegate manager:self didUpdateCurrentLoadingProgressPercentage:percentage];
 }
+
+- (void)operation:(HTTPBinManagerOperation *)op didFinishWithResponse:(HTTPBinManagerOperationResponse *)response {
+    [self.delegate manager:self didFinishCurrentOperationWithGetDict:response.getDictionary andPostDict:response.postDictionary andImage:response.image];
+}
+
 
 @end

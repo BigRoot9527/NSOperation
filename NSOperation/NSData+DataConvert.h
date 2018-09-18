@@ -9,9 +9,9 @@
 #import <Foundation/Foundation.h>
 @import UIKit;
 
+extern NSString * const BigRootErrorDomain;
+
 @interface NSData (DataConvert)
-
-- (NSDictionary*)dictionaryFromDataWithErrorHandler:(NSError**)handler;
-- (UIImage*)imageFromDataWithErrorHandler:(NSError**)handler;
-
+- (NSDictionary*)dictionaryFromDataWithError:(NSError**)handler;
+- (UIImage*)imageFromDataWithError:(NSError**)handler;
 @end

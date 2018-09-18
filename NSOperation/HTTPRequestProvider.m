@@ -10,13 +10,13 @@
 
 @implementation HTTPRequestProvider
 
-- (NSMutableURLRequest*)requestWithType:(KKRequestType)type urlenStringForPostRequest:(NSString *)postString
+- (NSMutableURLRequest*)requestWithType:(KKRequestType)type postString:(NSString *)postString
 {
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[self _urlForRequestType:type]];
     [request setHTTPMethod:[self _httpMethodStringForRequestType:type]];
     
     if (type == KKRequestTypePost) {
-        NSData *postData = [postString dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+        NSData *postData = [postString dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
         NSString *postLength = [NSString stringWithFormat:@"%lu", [postData length]];
         [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
         [request setHTTPBody:postData];

@@ -8,9 +8,11 @@
 
 #import "NSData+DataConvert.h"
 
+NSString * const BigRootErrorDomain = @"com.NSOperation.BigRoot";
+
 @implementation NSData (DataConvert)
 
-- (NSDictionary*)dictionaryFromDataWithErrorHandler:(NSError**)handler;
+- (NSDictionary*)dictionaryFromDataWithError:(NSError**)handler;
 {
     NSError *err;
     NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:self options:NSJSONReadingMutableContainers error:&err];
@@ -19,16 +21,22 @@
         *handler = err;
         return nil;
     }
+    if (![dict isKindOfClass:[NSDictionary class]]) {
+        err = [NSError errorWithDomain:BigRootErrorDomain code:-2 userInfo:@{NSLocalizedDescriptionKey: @"Not a dictionary"}];
+        *handler = err;
+        return nil;
+    }
+    
     return dict;
 }
 
-- (UIImage*)imageFromDataWithErrorHandler:(NSError**)handler;
+- (UIImage*)imageFromDataWithError:(NSError**)handler;
 {
     UIImage *image = [UIImage imageWithData:self];
     if (!image) {
         NSMutableDictionary* details = [NSMutableDictionary dictionary];
         [details setValue:@"fail to transfer to UIImage" forKey:NSDebugDescriptionErrorKey];
-        *handler = [[NSError alloc] initWithDomain:@"com.NSOperation.BigRoot" code:-1 userInfo:details];
+        *handler = [[NSError alloc] initWithDomain:BigRootErrorDomain code:-1 userInfo:details];
         return nil;
     }
     return image;

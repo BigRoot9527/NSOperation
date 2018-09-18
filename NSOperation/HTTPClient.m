@@ -53,11 +53,11 @@
 
 - (void)fetchGetResponseWithCallback:(void(^)(NSDictionary *, NSError *))callback
 {
-    NSMutableURLRequest *request = [self.requestProvider requestWithType:KKRequestTypeGet urlenStringForPostRequest:nil];
+    NSMutableURLRequest *request = [self.requestProvider requestWithType:KKRequestTypeGet postString:nil];
     NSURLSessionDataTask *dataTask = [self.session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         dispatch_async(dispatch_get_main_queue(), ^{
             NSError *err;
-            NSDictionary *dict = [data dictionaryFromDataWithErrorHandler:&err];
+            NSDictionary *dict = [data dictionaryFromDataWithError:&err];
             callback(dict, error == nil ? err : error);
         });
     }];
@@ -67,11 +67,11 @@
 - (void)postCustomerName:(NSString *)name callback:(void(^)(NSDictionary *, NSError *))callback
 {
     NSString *postString = [NSString stringWithFormat:@"custname=%@",name];
-    NSMutableURLRequest *request = [self.requestProvider requestWithType:KKRequestTypePost urlenStringForPostRequest:postString];
+    NSMutableURLRequest *request = [self.requestProvider requestWithType:KKRequestTypePost postString:postString];
     NSURLSessionDataTask *dataTask = [self.session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         dispatch_async(dispatch_get_main_queue(), ^{
             NSError *err;
-            NSDictionary *dict = [data dictionaryFromDataWithErrorHandler:&err];
+            NSDictionary *dict = [data dictionaryFromDataWithError:&err];
             callback(dict, error == nil ? err : error);
         });
     }];
@@ -81,11 +81,11 @@
 
 - (void)fetchImageWithCallback:(void(^)(UIImage *, NSError *))callback
 {
-    NSMutableURLRequest *request = [self.requestProvider requestWithType:KKRequestTypeImage urlenStringForPostRequest:nil];
+    NSMutableURLRequest *request = [self.requestProvider requestWithType:KKRequestTypeImage postString:nil];
     NSURLSessionDataTask *dataTask = [self.session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         dispatch_async(dispatch_get_main_queue(), ^{
             NSError *err;
-            UIImage *image = [data imageFromDataWithErrorHandler:&err];
+            UIImage *image = [data imageFromDataWithError:&err];
             callback(image, error == nil ? err : error);
         });
     }];

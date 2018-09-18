@@ -8,6 +8,7 @@
 
 #import "HTTPBinManagerOperation.h"
 #import "HTTPClient.h"
+
 @interface HTTPBinManagerOperation()
 @property (nonatomic, strong) HTTPClient *client;
 @property (nonatomic) dispatch_semaphore_t sem;
@@ -15,6 +16,10 @@
 @property (nonatomic, strong) NSDictionary* getDict;
 @property (nonatomic, strong) UIImage* image;
 @property(nonatomic, weak) id<HTTPBinManagerOperationDelegate> delegate;
+@end
+
+
+@implementation HTTPBinManagerOperationResponse
 @end
 
 @implementation HTTPBinManagerOperation
@@ -43,6 +48,9 @@
 - (void)main
 {
     [self _loadGetRequest];
+    [self _loadPostRequest];
+    [self _loadImageRequest];
+    [self _passAllResponse];
 }
 
 - (void)cancel
@@ -60,7 +68,7 @@
     [self.client fetchGetResponseWithCallback:^(NSDictionary *dict, NSError *error) {
         if (dict) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self.delegate operation:self didUpdateLoadingProcessPercentageTo:33];
+                [self.delegate operation:self didLoadToPercentage:33];
                 self.getDict = dict;
             });
             dispatch_semaphore_signal(self.sem);
@@ -72,7 +80,6 @@
         }
     }];
     dispatch_semaphore_wait(self.sem, DISPATCH_TIME_FOREVER);
-    [self _loadPostRequest];
 }
 
 - (void)_loadPostRequest
@@ -83,7 +90,7 @@
     [self.client postCustomerName:@"BigRoot" callback:^(NSDictionary *dict, NSError *error) {
         if (dict) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self.delegate operation:self didUpdateLoadingProcessPercentageTo:66];
+                [self.delegate operation:self didLoadToPercentage:66];
                 self.postDict = dict;
             });
             dispatch_semaphore_signal(self.sem);
@@ -95,7 +102,6 @@
         }
     }];
     dispatch_semaphore_wait(self.sem, DISPATCH_TIME_FOREVER);
-    [self _loadImageRequest];
 }
 
 - (void)_loadImageRequest
@@ -106,7 +112,7 @@
     [self.client fetchImageWithCallback:^(UIImage *image, NSError *error) {
         if (image) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self.delegate operation:self didUpdateLoadingProcessPercentageTo:100];
+                [self.delegate operation:self didLoadToPercentage:100];
                 self.image = image;
             });
             dispatch_semaphore_signal(self.sem);
@@ -118,7 +124,6 @@
         }
     }];
     dispatch_semaphore_wait(self.sem, DISPATCH_TIME_FOREVER);
-    [self _passAllResponse];
 }
 
 - (void)_passAllResponse
@@ -127,7 +132,11 @@
         return;
     }
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self.delegate operation:self didFinishAllRequestWithGETResponseDict:self.getDict AndPostResponseDict:self.postDict AndResponseImage:self.image];
+        HTTPBinManagerOperationResponse *response = [[HTTPBinManagerOperationResponse alloc] init];
+        response.getDictionary = self.getDict;
+        response.postDictionary = self.postDict;
+        response.image = self.image;
+        [self.delegate operation:self didFinishWithResponse:response];
     });
 }
 

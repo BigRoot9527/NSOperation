@@ -11,5 +11,5 @@
 
 
 @interface HTTPRequestProvider : NSObject
-- (NSMutableURLRequest*)requestWithType:(KKRequestType)type urlenStringForPostRequest:(NSString *)postString;
+- (NSMutableURLRequest*)requestWithType:(KKRequestType)type postString:(NSString *)postString;
 @end
