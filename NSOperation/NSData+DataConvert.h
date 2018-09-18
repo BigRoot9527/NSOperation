@@ -12,6 +12,6 @@
 extern NSString * const BigRootErrorDomain;
 
 @interface NSData (DataConvert)
-- (NSDictionary*)dictionaryFromDataWithError:(NSError**)handler;
-- (UIImage*)imageFromDataWithError:(NSError**)handler;
+- (NSDictionary*)dictionaryFromDataWithError:(NSError**)error;
+- (UIImage*)imageFromDataWithError:(NSError**)error;
 @end

@@ -12,31 +12,31 @@ NSString * const BigRootErrorDomain = @"com.NSOperation.BigRoot";
 
 @implementation NSData (DataConvert)
 
-- (NSDictionary*)dictionaryFromDataWithError:(NSError**)handler;
+- (NSDictionary*)dictionaryFromDataWithError:(NSError**)error;
 {
     NSError *err;
     NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:self options:NSJSONReadingMutableContainers error:&err];
     if(err)
     {
-        *handler = err;
+        *error = err;
         return nil;
     }
     if (![dict isKindOfClass:[NSDictionary class]]) {
         err = [NSError errorWithDomain:BigRootErrorDomain code:-2 userInfo:@{NSLocalizedDescriptionKey: @"Not a dictionary"}];
-        *handler = err;
+        *error = err;
         return nil;
     }
     
     return dict;
 }
 
-- (UIImage*)imageFromDataWithError:(NSError**)handler;
+- (UIImage*)imageFromDataWithError:(NSError**)error;
 {
     UIImage *image = [UIImage imageWithData:self];
     if (!image) {
         NSMutableDictionary* details = [NSMutableDictionary dictionary];
         [details setValue:@"fail to transfer to UIImage" forKey:NSDebugDescriptionErrorKey];
-        *handler = [[NSError alloc] initWithDomain:BigRootErrorDomain code:-1 userInfo:details];
+        *error = [[NSError alloc] initWithDomain:BigRootErrorDomain code:-1 userInfo:details];
         return nil;
     }
     return image;
